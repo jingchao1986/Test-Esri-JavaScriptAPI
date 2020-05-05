@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>ArcGIS JavaScript Tutorials: Create a JavaScript starter app</title>
+    <style>
+      html, body, #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+      <link rel="stylesheet" href="https://js.arcgis.com/4.15/esri/themes/light/main.css">
+  <script src="https://js.arcgis.com/4.15/"></script>
+
+  <script>
+    require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/widgets/BasemapToggle",
+        "esri/widgets/BasemapGallery",
+        "esri/layers/FeatureLayer"      
+      ], function(Map, MapView,BasemapToggle, FeatureLayer,BasemapGallery) {
+  
+      var map = new Map({
+        basemap: "topo-vector"
+      });
+  
+      var view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-118.80500, 34.02700], // longitude, latitude
+        zoom: 13,
+    
+      });
+
+      /*var basemapToggle = new BasemapToggle({
+        view: view, 
+        nextBasemap: "satellite",
+        
+      });
+      view.ui.add(basemapToggle, "bottom-right");*/
+     
+      var basemapGallery = new BasemapGallery({
+        view: view,
+        source: {
+          portal: {
+            url: "https://www.arcgis.com",
+            useVectorBasemaps: true  // Load vector tile basemaps
+          }
+        }
+      });
+
+      view.ui.add(basemapGallery, "top-right");
+
+      var tempeCrimeLayer = new FeatureLayer({
+        url: "https://services3.arcgis.com/0OPQIK59PJJqLK0A/arcgis/rest/services/TempeCrime_OptimizedHotSpotAnalysis/FeatureServer/0?token=mxTbb8MsgBd4NLzehMbhyUk7grATKSOEDE5No5a-64puURKsvKinIGYymn78bP1Fspw9djwGHOh8_EY95CugXMUaz6OmK56znVrSFCFyB2FtXQg0qZ-8nv27BtUKYMSaPKxpiyJ7oiXMikL9QTuXLVu6bbirV2M7EEkMFsc9A5r9uAIuaO5ky--DOnspH5xDvuqDDZF92jdMX4DusC68SsYCJL8CvqAVBomet8YnjMt3RcO3322_tYcyDyJMyE_4"
+      });
+
+      map.add(tempeCrimeLayer);
+
+    });
+    </script>
+
+  </head>
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>
